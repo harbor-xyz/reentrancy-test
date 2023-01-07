@@ -1,0 +1,34 @@
+{
+    "config":{
+       "name":"shitanshu-test-3"
+    },
+    "chains":[
+       {
+          "chain":"ethereum",
+          "config":{
+            "artifactsPath":"./artifacts",
+            "afterDeploy": {
+                "location": ""
+            }
+          },
+          "smartContracts":[
+             {
+                "fileName":"Greeter.sol",
+                "name":"Greeter"
+             },
+             {
+                "fileName":"Greeter2.sol",
+                "name":"Greeter2"
+             }
+          ]
+       }
+    ],
+    "offChainActors":[
+       {
+          "dockerfile":"Dockerfile",
+          "buildPath":"/offChain/liquidation-bot-1/",
+          "name":"liquidation-bot-1",
+          "port":3000
+       }
+    ]
+ }

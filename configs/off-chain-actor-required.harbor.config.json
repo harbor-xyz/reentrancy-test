@@ -1,0 +1,28 @@
+{
+    "config":{
+       "name":"shitanshu-test-3"
+    },
+    "chains":[
+       {
+          "chain":"ethereum",
+          "config":{
+            "deploy": "./deploy",
+            "artifactsPath": "./artifacts"
+          },
+          "smartContracts":[
+             {
+                "name":"Greeter"
+             },
+             {
+                "name":"Greeter2"
+             }
+          ]
+       }
+    ],
+    "offChainActors":[
+       {
+          "name":"liquidation-bot-1",
+          "port":3000
+       }
+    ]
+ }

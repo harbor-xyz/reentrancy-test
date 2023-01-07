@@ -1,0 +1,12 @@
+{
+    "offChainActors": [
+        {
+            "name": "ipfs",
+            "image": "ipfs/go-ipfs:v0.4.23",
+            "ports": [
+                5001
+            ],
+            "tag": "v1"
+        }
+    ]
+}

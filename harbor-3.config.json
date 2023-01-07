@@ -1,0 +1,1 @@
+{"config":{"name":"hello-world"},"chains":[{"chain":"ethereum","config":{"artifactsPath":"./artifacts","deploy":"./deploy"},"smartContracts":[{"name":"Greeter","fileName":""},{"name":"Greeter2","fileName":""}]}],"offChainActors":[]}

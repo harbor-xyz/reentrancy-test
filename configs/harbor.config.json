@@ -1,0 +1,13 @@
+{
+  "chains": [
+    {
+      "chain": "ethereum",
+      "config": {
+        "artifactsPath": "./artifacts",
+        "deploy": { "scripts": "./deploy" }
+      },
+      "wallets": [{ "tokens": [{ "symbol": "DAI", "amount": 10 }] }],
+      "tag": "v1"
+    }
+  ]
+}

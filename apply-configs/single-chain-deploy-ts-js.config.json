@@ -1,0 +1,19 @@
+{
+  "chains": [
+    {
+      "chain": "ethereum",
+      "config": {
+        "artifactsPath": "/home/el_clandestin0_/Desktop/harbor/test-app/artifacts",
+        "deploy": {
+          "scripts": "/home/el_clandestin0_/Desktop/harbor/deploy"
+        }
+      },
+      "wallets": [
+        { "tokens": [{ "symbol": "dai", "amount": 10000 }] },
+        { "tokens": [{ "symbol": "dai", "amount": 10000 }] },
+        { "tokens": [{ "symbol": "dai", "amount": 10000 }] }
+      ],
+      "tag": "v2"
+    }
+  ]
+}

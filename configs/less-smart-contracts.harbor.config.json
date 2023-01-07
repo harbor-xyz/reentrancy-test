@@ -1,0 +1,35 @@
+{
+    "config":{
+       "name":"show-less-smart-contracts-4"
+    },
+    "chains":[
+       {
+          "chain":"ethereum",
+          "config":{
+             "artifactsPath":"./artifacts",
+             "deploy":"./deploy",
+             "environment":{
+                "STAGE": "supra-testing-environment-ethereum"
+             },
+             "afterDeploy":{
+                "location":"./afterDeploy"
+             },
+             "compiler":""
+          },
+          "smartContracts":[
+             {
+                "fileName":"Greeter.sol",
+                "name":"Greeter"
+             }
+          ]
+       }
+    ],
+    "offChainActors":[
+       {
+          "dockerfile":"./offChain/liquidation-bot-1/Dockerfile",
+          "buildPath":"./offChain/liquidation-bot-1/",
+          "name":"liquidation-bot-1",
+          "port":3000
+       }
+    ]
+ }
