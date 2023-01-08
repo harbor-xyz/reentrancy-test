@@ -1,6 +1,13 @@
-require("hardhat-deploy");
-const { HardhatUserConfig, task } = require("hardhat/config");
-require("@nomicfoundation/hardhat-toolbox");
+
+import "@nomiclabs/hardhat-ethers";
+import "@nomiclabs/hardhat-waffle";
+import "./hardhat-harbor.js";
+
+import "harbor-hardhat-deploy";
+
+import "hardhat-deploy-ethers"
+import { task } from "hardhat/config";
+
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -23,13 +30,23 @@ module.exports = {
   namedAccounts: {
     deployer: 0,
   },
+  // defaultNetwork: "anvil",
+
   networks: {
     hardhat: {
-      gas: "auto",
-      allowUnlimitedContractSize: true,
+		loggingEnabled: true,
+		saveDeployments: true,
+		allowUnlimitedContractSize: true,
+		forking: {
+		url: "https://eth-mainnet.alchemyapi.io/v2/vhmUDozTceOkcBRRaCiw7Ih5fc8ig5bb",
+		blockNumber: 15676364,
+	},
+      chainId: 1337,
     },
-    harbor: {
-      url: "http://65.2.128.199:4000",
+
+    anvil: {
+      url: "http://0.0.0.0:4000/",
+      launch: false, 
     },
   },
 };

@@ -3,27 +3,9 @@ const hre = require("hardhat");
 const { expect } = require("chai");
 const { TIMEOUT } = require("dns");
 const { ethers } = require("ethers");
-const fs = require("fs");
-const fsPromises = fs.promises;
 
 function generateRandomTestnetName() {
   return `testnet-${Math.floor(Math.random() * 1000)}`;
-}
-
-const ABI_FILE_PATH = "./artifacts/contracts/Greeter.sol/Greeter.json";
-
-async function getAbi() {
-  const data = await fsPromises.readFile(ABI_FILE_PATH, "utf8");
-  const abi = JSON.parse(data)["abi"];
-  return abi;
-}
-
-async function sendEther(ethers, provider, signer, to, amount) {
-  const tx = await signer.sendTransaction({
-    to,
-    value: ethers.utils.parseEther(amount),
-  });
-  await tx.wait();
 }
 
 describe(
@@ -52,12 +34,27 @@ describe(
       });
       await harbor.authenticate();
       signers = await hre.ethers.getSigners();
-      testnet = await harbor.testnet("anothathree");
+      testnet = await harbor.apply(
+        {
+          chains: [
+            {
+              chain: "ethereum",
+              config: {
+                artifactsPath: "./artifacts",
+                deploy: {
+                  scripts: "./deploy",
+                },
+              },
+              tag: "v1",
+            },
+          ],
+        },
+        generateRandomTestnetName()
+      );
       chains = await testnet.chains();
       ethereum = chains[0];
       accounts = await ethereum.accounts();
       provider = ethers.getDefaultProvider(ethereum.endpoint);
-      signers = await hre.ethers.getSigners();
       for (i = 0; i < accounts.length; i++) {
         if (accounts[i].type == "contract") {
           if (accounts[i].name == "Thief") {
@@ -74,22 +71,6 @@ describe(
           }
         }
       }
-      // testnet = await harbor.apply(
-      //   {
-      //     chains: [
-      //       {
-      //         chain: "ethereum",
-      //         config: {
-      //           artifactsPath: "./artifacts",
-      //           deploy: { scripts: "./deploy" },
-      //         },
-      //         wallets: [],
-      //         tag: "v1",
-      //       },
-      //     ],
-      //   },
-      //   generateRandomTestnetName()
-      // )
     }, TIMEOUT);
     it(
       "Expects testnet to be RUNNING",
@@ -101,7 +82,7 @@ describe(
     it(
       "Deposits 10 ETH into the bank vault from 3 different users",
       async () => {
-        const oneEther = ethers.utils.parseEther("1");
+        const tenEthers = ethers.utils.parseEther("10");
         let totalFunds = 0;
         for (let i = 0; i < 3; i++) {
           bankContract = new ethers.Contract(
@@ -109,7 +90,7 @@ describe(
             bankInfo.abi,
             provider.getSigner(i)
           );
-          // await bankContract.deposit({ value: oneEther });
+          await bankContract.deposit({ value: tenEthers });
           const address = signers[i].address;
           const userBalance = (await bankContract.balances(address)).toString();
           const userBalanceFormatted = Number(userBalance) / 1e18;
@@ -117,24 +98,30 @@ describe(
         }
         const balance = (await bankContract.vault()).toString();
         const balanceFornatted = Number(balance) / 1e18;
+        console.log(balanceFornatted);
+        console.log(totalFunds);
         expect(totalFunds).to.eql(balanceFornatted);
       },
       TIMEOUT
     );
     it("Attacks the bank until the vault is zero", async () => {
+      const bankVaultBalanceBefore = Number(
+        (await bankContract.vault()).toString()
+      );
       const oneEther = ethers.utils.parseEther("1");
       // the gas amount is overkill but we do this to ensure that the tx has enough gas to go through many recursions
-      const gas = ethers.utils.parseEther("1");
+      const gas = ethers.utils.parseEther("10");
       await thiefContract.steal({
         value: oneEther,
-        gasLimit: gas,
       });
       const bankVaultBalance = Number((await bankContract.vault()).toString());
+      console.log("bank balance before: ", bankVaultBalanceBefore);
+      console.log("bank balance after: ", bankVaultBalance);
       expect(bankVaultBalance).to.eql(0);
     });
-    // afterAll(async () => {
-    //   await harbor.stop(testnetName);
-    // });
+    afterAll(async () => {
+      await harbor.stop(testnetName);
+    });
   },
   TIMEOUT
 );
