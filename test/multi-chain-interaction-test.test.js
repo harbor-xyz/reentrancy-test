@@ -9,7 +9,7 @@ function generateRandomTestnetName() {
 }
 
 describe(
-  "Single chain, multiple deploy scripts",
+  "Re-entrancy test",
   () => {
     let harbor;
     let testnet;
@@ -49,7 +49,7 @@ describe(
             },
           ],
         },
-        generateRandomTestnetName()
+        testnetName
       );
       chains = await testnet.chains();
       ethereum = chains[0];
@@ -98,30 +98,22 @@ describe(
         }
         const balance = (await bankContract.vault()).toString();
         const balanceFornatted = Number(balance) / 1e18;
-        console.log(balanceFornatted);
-        console.log(totalFunds);
+        testnet = await harbor.testnet("testnet-288");
         expect(totalFunds).to.eql(balanceFornatted);
       },
       TIMEOUT
     );
     it("Attacks the bank until the vault is zero", async () => {
-      const bankVaultBalanceBefore = Number(
-        (await bankContract.vault()).toString()
-      );
       const oneEther = ethers.utils.parseEther("1");
-      // the gas amount is overkill but we do this to ensure that the tx has enough gas to go through many recursions
-      const gas = ethers.utils.parseEther("10");
       await thiefContract.steal({
         value: oneEther,
       });
       const bankVaultBalance = Number((await bankContract.vault()).toString());
-      console.log("bank balance before: ", bankVaultBalanceBefore);
-      console.log("bank balance after: ", bankVaultBalance);
       expect(bankVaultBalance).to.eql(0);
     });
-    afterAll(async () => {
-      await harbor.stop(testnetName);
-    });
+    afterAll(() => {
+      return harbor.stop(testnetName);
+    }, TIMEOUT);
   },
   TIMEOUT
 );
