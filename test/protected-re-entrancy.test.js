@@ -35,10 +35,11 @@ describe("Re-entrancy test", () => {
     // Add the config object below in the first argument of apply!
     testnet = await harbor.apply({}, testnetName);
 
-    provider = ethers.getDefaultProvider(ethereum.endpoint);
+
     signers = await hre.ethers.getSigners();
     chains = await testnet.chains();
     ethereum = chains[0];
+    provider = ethers.getDefaultProvider(ethereum.endpoint);
     accounts = await ethereum.accounts();
     for (i = 0; i < accounts.length; i++) {
       if (accounts[i].type == "contract") {
