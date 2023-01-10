@@ -1,7 +1,8 @@
 const Harbor = require("@harbor-xyz/harbor");
 const hre = require("hardhat");
-const { expect } = require("chai");
 const { ethers } = require("ethers");
+const chai = require("chai");
+const expect = chai.expect;
 chai.use(require("chai-as-promised"));
 
 function generateRandomTestnetName() {
