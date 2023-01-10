@@ -25,7 +25,7 @@ describe("Re-entrancy test", () => {
     // Initialize the `harbor` object here
     harbor = new Harbor({
       userKey: "",
-      projectKey: "",
+      projectKey: "p",
     });
 
     // Authenticate in the code below!
