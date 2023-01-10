@@ -44,7 +44,7 @@ describe("Re-entrancy test", () => {
     for (i = 0; i < accounts.length; i++) {
       if (accounts[i].type == "contract") {
         if (accounts[i].name == "SecondThief") {
-          // Assign the contract here!
+          // Assign the secondThiefContract here!
         } else if ((accounts[i].name = "ProtectedBank")) {
           bankInfo = {
             address: accounts[i].address,
