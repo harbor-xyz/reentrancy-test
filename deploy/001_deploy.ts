@@ -23,7 +23,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   });
   const protectedBankAddress = protectedBank.address;
 
-  await deploy("AnotherThief", {
+  await deploy("SecondThief", {
     from: deployer,
     gasLimit: 500000,
     args: [protectedBankAddress],
