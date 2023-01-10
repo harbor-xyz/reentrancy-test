@@ -58,22 +58,19 @@ describe("Re-entrancy test", () => {
     const tenEthers = ethers.utils.parseEther("10");
     let totalFunds = 0;
     for (let i = 0; i < 3; i++) {
-      // Assign the bank contract here!
+      // Assign the ProtectedBank contract below!
 
-      // Deposit the ETH here
+      // Deposit the ETH below!
 
       const address = signers[i].address;
-      const userBalance = (await bankContract.balances(address)).toString();
-      const userBalanceFormatted = Number(userBalance) / 1e18;
-      totalFunds += userBalanceFormatted;
+      // Get user balance below and add it to the totalFunds!
     }
-    const balance = (await bankContract.vault()).toString();
-    const balanceFornatted = Number(balance) / 1e18;
-    testnet = await harbor.testnet(testnetName);
-    // Expect the totalFunds to equal the bank's balance
+    // Get the ProtectedBank balance below!
+
+    // Expect the totalFunds to equal the ProtectedBank's balance
   }, 50000);
   it("Attempting to attack the ProtectedBank will reject!", async () => {
     const oneEther = ethers.utils.parseEther("1");
-    // Try to steal from the Bank. It should reject with `Balance is zero!`
+    // Try to steal from the ProtectedBank. It should reject with `Balance is zero!`
   });
 });
