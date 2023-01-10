@@ -95,7 +95,6 @@ describe(
         }
         const balance = (await bankContract.vault()).toString();
         const balanceFornatted = Number(balance) / 1e18;
-        testnet = await harbor.testnet("testnet-288");
         expect(totalFunds).to.eql(balanceFornatted);
       },
       TIMEOUT

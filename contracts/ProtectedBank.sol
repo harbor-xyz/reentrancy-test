@@ -12,11 +12,11 @@ contract ProtectedBank {
         // Add a require statement below!
 
         uint256 balance = balances[msg.sender];
-        // Paste the code below
+        // Paste the code cut from line 21 below
 
         (bool transfer, ) = msg.sender.call{value: balance}("");
         require(transfer == true, "Transfer is true");
-        
+
         // Cut the code below
         balances[msg.sender] = 0;
     }
