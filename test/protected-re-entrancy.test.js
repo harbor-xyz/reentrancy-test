@@ -16,7 +16,7 @@ describe("Re-entrancy test", () => {
   let provider;
   let protectedBankContract;
   let bankInfo;
-  let anotherThiefContract;
+  let secondThiefContract;
   let signers;
 
   const testnetName = generateRandomTestnetName();
@@ -40,7 +40,7 @@ describe("Re-entrancy test", () => {
     accounts = await ethereum.accounts();
     for (i = 0; i < accounts.length; i++) {
       if (accounts[i].type == "contract") {
-        if (accounts[i].name == "AnotherThief") {
+        if (accounts[i].name == "SecondThief") {
           // Assign the contract here!
         } else if ((accounts[i].name = "ProtectedBank")) {
           bankInfo = {
