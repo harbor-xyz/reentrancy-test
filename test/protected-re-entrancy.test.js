@@ -25,7 +25,7 @@ describe("Re-entrancy test", () => {
     // Initialize the `harbor` object here
     harbor = new Harbor({
       userKey: "",
-      projectKey: "O",
+      projectKey: "",
     });
 
     // Authenticate in the code below!
@@ -76,6 +76,5 @@ describe("Re-entrancy test", () => {
   it("Attempting to attack the ProtectedBank will reject!", async () => {
     const oneEther = ethers.utils.parseEther("1");
     // Try to steal from the Bank. It should reject with `Balance is zero!`
-    
   });
 });
