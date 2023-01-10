@@ -24,30 +24,14 @@ describe(
     const testnetName = generateRandomTestnetName();
 
     beforeAll(async () => {
-      // initialize harbor and testnet variables here so that they are usable in every test
-      harbor = new Harbor({
-        userKey: "cFeJWnDwQFVTSF2AabJmW5",
-        projectKey: "fPMeKGPUfyBTCoqtXmv3G4",
-      });
-      await harbor.authenticate();
+      // Initialize the `harbor` object here
+
+      // Authenticate here!
+
+      // Add the config object below in the first argument of apply!
+      testnet = await harbor.apply({}, testnetName);
+
       signers = await hre.ethers.getSigners();
-      testnet = await harbor.apply(
-        {
-          chains: [
-            {
-              chain: "ethereum",
-              config: {
-                artifactsPath: "./artifacts",
-                deploy: {
-                  scripts: "./deploy",
-                },
-              },
-              tag: "v1",
-            },
-          ],
-        },
-        testnetName
-      );
       chains = await testnet.chains();
       ethereum = chains[0];
       accounts = await ethereum.accounts();
@@ -55,6 +39,7 @@ describe(
       for (i = 0; i < accounts.length; i++) {
         if (accounts[i].type == "contract") {
           if (accounts[i].name == "Thief") {
+            // Assign the contract here!
             thiefContract = new ethers.Contract(
               accounts[i].address,
               accounts[i].abi,
@@ -82,12 +67,10 @@ describe(
         const tenEthers = ethers.utils.parseEther("10");
         let totalFunds = 0;
         for (let i = 0; i < 3; i++) {
-          bankContract = new ethers.Contract(
-            bankInfo.address,
-            bankInfo.abi,
-            provider.getSigner(i)
-          );
-          await bankContract.deposit({ value: tenEthers });
+          // Assign the bank contract here!
+
+          // deposit the ETH here
+
           const address = signers[i].address;
           const userBalance = (await bankContract.balances(address)).toString();
           const userBalanceFormatted = Number(userBalance) / 1e18;
@@ -95,18 +78,16 @@ describe(
         }
         const balance = (await bankContract.vault()).toString();
         const balanceFornatted = Number(balance) / 1e18;
-        testnet = await harbor.testnet("testnet-288");
+        testnet = await harbor.testnet(testnetName);
+
+        // Expect the totalFunds to equal the balance
         expect(totalFunds).to.eql(balanceFornatted);
       },
       TIMEOUT
     );
-    it("Attacks the bank until the vault is zero", async () => {
+    it("Attempting to attack the ProtectedBank will reject!", async () => {
       const oneEther = ethers.utils.parseEther("1");
-      await thiefContract.steal({
-        value: oneEther,
-      });
-      const bankVaultBalance = Number((await bankContract.vault()).toString());
-      expect(bankVaultBalance).to.eql(0);
+      // Try to steal from the Bank. It should reject with `Balance is zero!`
     });
   },
   TIMEOUT
