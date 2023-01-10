@@ -1,7 +1,6 @@
-const Harbor = require("@beam-me-up/harbor");
+const Harbor = require("@harbor-xyz/harbor");
 const hre = require("hardhat");
 const { expect } = require("chai");
-const { TIMEOUT } = require("dns");
 const { ethers } = require("ethers");
 
 function generateRandomTestnetName() {
@@ -30,7 +29,6 @@ describe(
       harbor = new Harbor({
         userKey: "cFeJWnDwQFVTSF2AabJmW5",
         projectKey: "fPMeKGPUfyBTCoqtXmv3G4",
-        baseUrl: "https://develop-api.tech.goharbor.com",
       });
       await harbor.authenticate();
       signers = await hre.ethers.getSigners();
