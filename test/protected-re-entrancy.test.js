@@ -74,5 +74,6 @@ describe("Re-entrancy test", () => {
   it("Attempting to attack the ProtectedBank will reject!", async () => {
     const oneEther = ethers.utils.parseEther("1");
     // Try to steal from the ProtectedBank. It should reject with `Balance is zero!`
+    // Finally, expect the ProtectedBank's vault amount to be 30!
   });
 });
