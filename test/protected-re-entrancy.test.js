@@ -42,7 +42,7 @@ describe("Re-entrancy test", () => {
       if (accounts[i].type == "contract") {
         if (accounts[i].name == "AnotherThief") {
           // Assign the contract here!
-        } else if ((accounts[i].name = "Bank")) {
+        } else if ((accounts[i].name = "ProtectedBank")) {
           bankInfo = {
             address: accounts[i].address,
             abi: accounts[i].abi,
