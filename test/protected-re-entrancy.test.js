@@ -25,6 +25,10 @@ describe(
 
     beforeAll(async () => {
       // Initialize the `harbor` object here
+      harbor = new Harbor({
+        userKey: "",
+        projectKey: "",
+      });
 
       // Authenticate here!
 
