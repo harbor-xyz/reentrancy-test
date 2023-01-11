@@ -25,12 +25,12 @@ describe(
 
     beforeAll(async () => {
       harbor = new Harbor({
-        userKey: "9S7NYNRjgy6Xaw5eSdaGqg",
-        projectKey: "519EJKbSH1ZX43rBCBX7Ef",
+        userKey: "",
+        projectKey: "",
       });
       await harbor.authenticate();
       signers = await hre.ethers.getSigners();
-i
+      i;
       testnet = await harbor.testnet("testnet-36796");
       chains = await testnet.chains();
       ethereum = chains[0];
