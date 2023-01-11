@@ -1,0 +1,13 @@
+node_modules
+.env
+.harbor
+coverage
+coverage.json
+typechain
+.harbor
+
+#Hardhat files
+cache
+
+# lock 
+yarn.lock

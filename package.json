@@ -10,8 +10,7 @@
   "scripts": {
     "test": "jest"
   },
-  "dependencies": {
-    "@beam-me-up/harbor": "^0.0.11",
+  "dependencies": {    
     "@harbor-xyz/harbor": "^0.4.1",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.5",
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
