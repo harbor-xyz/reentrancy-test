@@ -24,7 +24,6 @@ describe(
     const testnetName = generateRandomTestnetName();
 
     beforeAll(async () => {
-      // initialize harbor and testnet variables here so that they are usable in every test
       harbor = new Harbor({
         userKey: "cFeJWnDwQFVTSF2AabJmW5",
         projectKey: "fPMeKGPUfyBTCoqtXmv3G4",
