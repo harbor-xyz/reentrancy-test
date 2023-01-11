@@ -1,4 +1,4 @@
-const Harbor = require("@beam-me-up/harbor");
+const Harbor = require("@harbor-xyz/harbor");
 const hre = require("hardhat");
 const { expect } = require("chai");
 const { ethers } = require("ethers");
@@ -53,7 +53,6 @@ describe(
       provider = ethers.getDefaultProvider(ethereum.endpoint);
       for (i = 0; i < accounts.length; i++) {
         if (accounts[i].type == "contract") {
-          console.log(accounts[i]);
           if (accounts[i].name == "Thief") {
             thiefContract = new ethers.Contract(
               accounts[i].address,
