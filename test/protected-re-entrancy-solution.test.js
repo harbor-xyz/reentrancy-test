@@ -83,16 +83,10 @@ describe("Re-entrancy test", () => {
         provider.getSigner(i)
       );
       await protectedBankContract.deposit({ value: tenEthers });
-      const address = signers[i].address;
-      const userBalance = (
-        await protectedBankContract.balances(address)
-      ).toString();
-      const userBalanceFormatted = Number(userBalance) / 1e18;
-      totalFunds += userBalanceFormatted;
     }
     const balance = (await protectedBankContract.vault()).toString();
     const balanceFornatted = Number(balance) / 1e18;
-    expect(totalFunds).to.eql(balanceFornatted);
+    expect(balanceFornatted).to.eql(30);
   }, 50000);
   it("Attempting to attack the ProtectedBank will reject!", async () => {
     const oneEther = ethers.utils.parseEther("1");

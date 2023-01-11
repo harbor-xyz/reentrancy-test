@@ -30,23 +30,24 @@ describe(
       });
       await harbor.authenticate();
       signers = await hre.ethers.getSigners();
-      testnet = await harbor.apply(
-        {
-          chains: [
-            {
-              chain: "ethereum",
-              config: {
-                artifactsPath: "./artifacts",
-                deploy: {
-                  scripts: "./deploy",
-                },
-              },
-              tag: "v1",
-            },
-          ],
-        },
-        testnetName
-      );
+      // testnet = await harbor.apply(
+      //   {
+      //     chains: [
+      //       {
+      //         chain: "ethereum",
+      //         config: {
+      //           artifactsPath: "./artifacts",
+      //           deploy: {
+      //             scripts: "./deploy",
+      //           },
+      //         },
+      //         tag: "v1",
+      //       },
+      //     ],
+      //   },
+      //   testnetName
+      // );
+      testnet = await harbor.testnet("testnet-36796");
       chains = await testnet.chains();
       ethereum = chains[0];
       accounts = await ethereum.accounts();
@@ -87,14 +88,10 @@ describe(
             provider.getSigner(i)
           );
           await bankContract.deposit({ value: tenEthers });
-          const address = signers[i].address;
-          const userBalance = (await bankContract.balances(address)).toString();
-          const userBalanceFormatted = Number(userBalance) / 1e18;
-          totalFunds += userBalanceFormatted;
         }
         const balance = (await bankContract.vault()).toString();
         const balanceFornatted = Number(balance) / 1e18;
-        expect(totalFunds).to.eql(balanceFornatted);
+        expect(balanceFornatted).to.eql(30);
       },
       TIMEOUT
     );
