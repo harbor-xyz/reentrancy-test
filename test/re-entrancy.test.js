@@ -25,8 +25,8 @@ describe(
 
     beforeAll(async () => {
       harbor = new Harbor({
-        userKey: "cFeJWnDwQFVTSF2AabJmW5",
-        projectKey: "fPMeKGPUfyBTCoqtXmv3G4",
+        userKey: "9S7NYNRjgy6Xaw5eSdaGqg",
+        projectKey: "519EJKbSH1ZX43rBCBX7Ef",
       });
       await harbor.authenticate();
       signers = await hre.ethers.getSigners();
@@ -59,7 +59,7 @@ describe(
               accounts[i].abi,
               provider.getSigner(0)
             );
-          } else if ((accounts[i].name == "Bank")) {
+          } else if (accounts[i].name == "Bank") {
             bankInfo = {
               address: accounts[i].address,
               abi: accounts[i].abi,
@@ -98,14 +98,20 @@ describe(
       },
       TIMEOUT
     );
-    it("Attacks the bank until the vault is zero", async () => {
-      const oneEther = ethers.utils.parseEther("1");
-      await thiefContract.steal({
-        value: oneEther,
-      });
-      const bankVaultBalance = Number((await bankContract.vault()).toString());
-      expect(bankVaultBalance).to.eql(0);
-    });
+    it(
+      "Attacks the bank until the vault is zero",
+      async () => {
+        const oneEther = ethers.utils.parseEther("1");
+        await thiefContract.steal({
+          value: oneEther,
+        });
+        const bankVaultBalance = Number(
+          (await bankContract.vault()).toString()
+        );
+        expect(bankVaultBalance).to.eql(0);
+      },
+      TIMEOUT
+    );
   },
   TIMEOUT
 );
