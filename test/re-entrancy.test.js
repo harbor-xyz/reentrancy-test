@@ -1,10 +1,10 @@
-const Harbor = require("@harbor-xyz/harbor");
+const Harbor = require("@beam-me-up/harbor");
 const hre = require("hardhat");
 const { expect } = require("chai");
 const { ethers } = require("ethers");
 
 function generateRandomTestnetName() {
-  return `testnet-${Math.floor(Math.random() * 1000)}`;
+  return `testnet-${Math.floor(Math.random() * 100000)}`;
 }
 const TIMEOUT = 30000000;
 describe(
@@ -53,13 +53,14 @@ describe(
       provider = ethers.getDefaultProvider(ethereum.endpoint);
       for (i = 0; i < accounts.length; i++) {
         if (accounts[i].type == "contract") {
+          console.log(accounts[i]);
           if (accounts[i].name == "Thief") {
             thiefContract = new ethers.Contract(
               accounts[i].address,
               accounts[i].abi,
               provider.getSigner(0)
             );
-          } else if ((accounts[i].name = "Bank")) {
+          } else if ((accounts[i].name == "Bank")) {
             bankInfo = {
               address: accounts[i].address,
               abi: accounts[i].abi,

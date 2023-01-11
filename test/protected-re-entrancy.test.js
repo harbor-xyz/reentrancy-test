@@ -24,17 +24,16 @@ describe("Re-entrancy test", () => {
   const testnetName = generateRandomTestnetName();
 
   beforeAll(async () => {
-    // Initialize the `harbor` object here
+    // Initialize the `harbor` object here!
     harbor = new Harbor({
       userKey: "",
       projectKey: "",
     });
 
-    // Authenticate in the code below!
+    // Authenticate here!
 
     // Add the config object below in the first argument of apply!
     testnet = await harbor.apply({}, testnetName);
-
 
     signers = await hre.ethers.getSigners();
     chains = await testnet.chains();
@@ -53,7 +52,8 @@ describe("Re-entrancy test", () => {
         }
       }
     }
-  }, 360000);
+    // Add a second timeout argument of `360000` here!
+  });
   it("Expects testnet to be RUNNING", async () => {
     // Expect our test to be running below!
   }, 50000);
