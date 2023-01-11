@@ -54,9 +54,13 @@ describe("Re-entrancy test", () => {
     }
     // Add a second timeout argument of `360000` here!
   });
+
+  // Tests start
   it("Expects testnet to be RUNNING", async () => {
     // Expect our test to be running below!
   }, 50000);
+
+  // new test
   it("Deposits 10 ETH into the bank vault from 3 different users", async () => {
     const tenEthers = ethers.utils.parseEther("10");
     let totalFunds = 0;
@@ -66,15 +70,18 @@ describe("Re-entrancy test", () => {
       // Deposit the ETH below!
 
       const address = signers[i].address;
-      // Get user balance below and add it to the totalFunds!
     }
     // Get the ProtectedBank balance below!
 
-    // Expect the totalFunds to equal the ProtectedBank's balance
+    // Expect the ProtectedBank's balance to equal to 30!
   }, 50000);
+
+  // new test
   it("Attempting to attack the ProtectedBank will reject!", async () => {
     const oneEther = ethers.utils.parseEther("1");
+
     // Try to steal from the ProtectedBank. It should reject with `Balance is zero!`
+
     // Finally, expect the ProtectedBank's vault amount to be 30!
-  });
+  }, 50000);
 });

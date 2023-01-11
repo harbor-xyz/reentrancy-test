@@ -10,8 +10,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     from: deployer,
     gasLimit: 500000,
   });
+  
   const bankAddress = bank.address;
-
   await deploy("Thief", {
     from: deployer,
     gasLimit: 500000,
