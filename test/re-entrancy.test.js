@@ -25,13 +25,29 @@ describe(
 
     beforeAll(async () => {
       harbor = new Harbor({
-        userKey: "",
-        projectKey: "",
+        userKey: "9S7NYNRjgy6Xaw5eSdaGqg",
+        projectKey: "sJHqS5q4B2jb6TwDP6pHm5",
       });
+
       await harbor.authenticate();
+      testnet = await harbor.apply(
+        {
+          chains: [
+            {
+              chain: "ethereum",
+              config: {
+                artifactsPath: "./artifacts",
+                deploy: {
+                  scripts: "./deploy",
+                },
+              },
+              tag: "v1",
+            },
+          ],
+        },
+        testnetName
+      );
       signers = await hre.ethers.getSigners();
-      i;
-      testnet = await harbor.testnet("testnet-36796");
       chains = await testnet.chains();
       ethereum = chains[0];
       accounts = await ethereum.accounts();
@@ -64,7 +80,6 @@ describe(
       "Deposits 10 ETH into the bank vault from 3 different users",
       async () => {
         const tenEthers = ethers.utils.parseEther("10");
-        let totalFunds = 0;
         for (let i = 0; i < 3; i++) {
           bankContract = new ethers.Contract(
             bankInfo.address,
@@ -76,6 +91,19 @@ describe(
         const balance = (await bankContract.vault()).toString();
         const balanceFormatted = Number(balance) / 1e18;
         expect(balanceFormatted).to.eql(30);
+
+        // Using the SDK to check Bank balance!
+        const chains = await testnet.chains();
+        const accounts = await chains[0].accounts();
+        for (let i = 0; i < accounts.length; i++) {
+          if (accounts[i].type == "contract") {
+            if (accounts[i].name == "Bank") {
+              const balance = accounts[i].balances[0].amount;
+              const balanceFormatted = Number(balance) / 1e18;
+              expect(balanceFormatted).to.eql(30);
+            }
+          }
+        }
       },
       TIMEOUT
     );
@@ -90,6 +118,19 @@ describe(
           (await bankContract.vault()).toString()
         );
         expect(bankVaultBalance).to.eql(0);
+
+        // Using the SDK to check Bank balance!
+        const chains = await testnet.chains();
+        const accounts = await chains[0].accounts();
+        for (let i = 0; i < accounts.length; i++) {
+          if (accounts[i].type == "contract") {
+            if (accounts[i].name == "ProtectedBank") {
+              const balance = accounts[i].balances[0].amount;
+              const balanceFormatted = Number(balance) / 1e18;
+              expect(balanceFormatted).to.eql(0);
+            }
+          }
+        }
       },
       TIMEOUT
     );
