@@ -25,8 +25,8 @@ describe(
 
     beforeAll(async () => {
       harbor = new Harbor({
-        userKey: "9S7NYNRjgy6Xaw5eSdaGqg",
-        projectKey: "sJHqS5q4B2jb6TwDP6pHm5",
+        userKey: "",
+        projectKey: "",
       });
 
       await harbor.authenticate();
