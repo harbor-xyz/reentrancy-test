@@ -26,11 +26,19 @@ After setting up your tests, run:
 yarn test
 ```
 
-To set up your tests. Make sure to fill in the credentials in the test files!
+To set up your tests.
+
+Make sure to fill in the credentials in the test files!
 
 ```javascript
 harbor = new Harbor({
   userKey: "cFeJWnDwQFVTSF2AabM2W5",
   projectKey: "fPMeKGPUfyBTCoq2omv3G4",
 });
+```
+
+To run the `protected-re-entrancy-solution.test.js`, make the changes on `ProtectedBank` as per the documention's instruction and run:
+
+```
+npx hardhat compile
 ```
