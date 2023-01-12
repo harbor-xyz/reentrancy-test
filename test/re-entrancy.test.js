@@ -30,6 +30,9 @@ describe(
       });
 
       await harbor.authenticate();
+      console.log(
+        "Deploying your contracts ... This may take a few minutes. Please stand by."
+      );
       testnet = await harbor.apply(
         {
           chains: [
