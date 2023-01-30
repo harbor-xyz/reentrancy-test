@@ -1,4 +1,4 @@
-const Harbor = require("@harbor-xyz/harbor");
+const Harbor = require("@beam-me-up/harbor");
 const hre = require("hardhat");
 const { expect } = require("chai");
 const { ethers } = require("ethers");
@@ -51,26 +51,20 @@ describe(
         testnetName
       );
       signers = await hre.ethers.getSigners();
-      chains = await testnet.chains();
-      ethereum = chains[0];
-      accounts = await ethereum.accounts();
+      ethereum = testnet.ethereum;
+      contracts = await ethereum.accounts();
+      const thief = contracts["Thief"];
+      const bank = contracts["Bank"];
       provider = ethers.getDefaultProvider(ethereum.endpoint);
-      for (i = 0; i < accounts.length; i++) {
-        if (accounts[i].type == "contract") {
-          if (accounts[i].name == "Thief") {
-            thiefContract = new ethers.Contract(
-              accounts[i].address,
-              accounts[i].abi,
-              provider.getSigner(0)
-            );
-          } else if (accounts[i].name == "Bank") {
-            bankInfo = {
-              address: accounts[i].address,
-              abi: accounts[i].abi,
-            };
-          }
-        }
-      }
+      thiefContract = new ethers.Contract(
+        thief.address,
+        thief.abi,
+        provider.getSigner(0)
+      );
+      bankInfo = {
+        address: bank.address,
+        abi: bank.abi,
+      };
     }, TIMEOUT);
     it(
       "Expects testnet to be RUNNING",
@@ -96,17 +90,12 @@ describe(
         expect(balanceFormatted).to.eql(30);
 
         // Using the SDK to check Bank balance!
-        const chains = await testnet.chains();
-        const accounts = await chains[0].accounts();
-        for (let i = 0; i < accounts.length; i++) {
-          if (accounts[i].type == "contract") {
-            if (accounts[i].name == "Bank") {
-              const balance = accounts[i].balances[0].amount;
-              const balanceFormatted = Number(balance) / 1e18;
-              expect(balanceFormatted).to.eql(30);
-            }
-          }
-        }
+        const { ethereum } = testnet;
+        const contracts = await ethereum.contracts();
+        const protectedBank = contracts["Bank"];
+        const balanceSDK = protectedBank.balances["ETH"];
+        const balanceFormattedSDK = Number(balanceSDK) / 1e18;
+        expect(balanceFormattedSDK).to.eql(30);
       },
       TIMEOUT
     );
@@ -123,17 +112,12 @@ describe(
         expect(bankVaultBalance).to.eql(0);
 
         // Using the SDK to check Bank balance!
-        const chains = await testnet.chains();
-        const accounts = await chains[0].accounts();
-        for (let i = 0; i < accounts.length; i++) {
-          if (accounts[i].type == "contract") {
-            if (accounts[i].name == "ProtectedBank") {
-              const balance = accounts[i].balances[0].amount;
-              const balanceFormatted = Number(balance) / 1e18;
-              expect(balanceFormatted).to.eql(0);
-            }
-          }
-        }
+        const { ethereum } = testnet;
+        const contracts = await ethereum.contracts();
+        const protectedBank = contracts["Bank"];
+        const balanceSDK = protectedBank.balances["ETH"];
+        const balanceFormattedSDK = Number(balanceSDK) / 1e18;
+        expect(balanceFormattedSDK).to.eql(0);
       },
       TIMEOUT
     );

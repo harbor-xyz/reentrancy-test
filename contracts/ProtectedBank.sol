@@ -10,15 +10,15 @@ contract ProtectedBank {
 
     function withdraw() external {
         // Add a require statement below!
-
         uint256 balance = balances[msg.sender];
+        require(balance > 0, "");
+        // Cut the code below
+        balances[msg.sender] = 0;
+
         // Paste the code cut from line 21 below
 
         (bool transfer, ) = msg.sender.call{value: balance}("");
         require(transfer == true, "Transfer is true");
-
-        // Cut the code below
-        balances[msg.sender] = 0;
     }
 
     function deposit() external payable {

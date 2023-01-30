@@ -298,6 +298,22 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@beam-me-up/harbor-cli@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@beam-me-up/harbor-cli/-/harbor-cli-0.0.11.tgz#db12fdea8777bd06e98db2cceae8e176e7b3ebd0"
+  integrity sha512-Ysd1vODpDUzFFbrggOEYFoIqrddhtOxfnPZRUIJwns7QobQQ9xDIL6JcS97wh50UCDS+91J4F5Fqykclrtgvtg==
+  dependencies:
+    mkdirp "^1.0.4"
+
+"@beam-me-up/harbor@0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@beam-me-up/harbor/-/harbor-0.0.17.tgz#f0e38d3ca03f97ac88a378dd04a949932ee91737"
+  integrity sha512-cgHf279886DWUySsRpvo3thE660PkzSYW03TEP5v9sIYQwd/Wmp4QLlsBajizUUbC6yjxuZMv2Vac7lDTrmMyQ==
+  dependencies:
+    "@beam-me-up/harbor-cli" "^0.0.11"
+    isomorphic-unfetch "^3.1.0"
+    project-bin-path "^2.0.0"
+
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz#00629c35a688e05a88b1cda684fb9d5e73f000a1"
@@ -829,22 +845,6 @@
   dependencies:
     command-exists "^1.2.9"
     ts-interface-checker "^0.1.9"
-
-"@harbor-xyz/harbor-cli@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@harbor-xyz/harbor-cli/-/harbor-cli-0.4.0.tgz#0bb6295b957a952ae8b27b2440b65c83d82d21f7"
-  integrity sha512-Qq5TyrIzzQzKmch8xgNtrC1CgNZuL57AclJZ7VXdFaMcCD2NKP2v7EnsQMF+EIh6KRLrSONBvz+LcQykpNVw/A==
-  dependencies:
-    mkdirp "^1.0.4"
-
-"@harbor-xyz/harbor@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@harbor-xyz/harbor/-/harbor-0.4.1.tgz#a5f362cdf375866bc46c860fea78c836b26ec38c"
-  integrity sha512-fDDxu/RlMcM143HQu18ujWaOUXhAdVme+OKe+9WF4FA+saJRdsMdrAM4+c3FXE8L+FUGGK+1MpKFXzSfOJzx+g==
-  dependencies:
-    "@harbor-xyz/harbor-cli" "^0.4.0"
-    isomorphic-unfetch "^3.1.0"
-    project-bin-path "^2.0.0"
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
