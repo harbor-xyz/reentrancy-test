@@ -36,22 +36,16 @@ describe("Re-entrancy test", () => {
     testnet = await harbor.apply({}, testnetName);
 
     signers = await hre.ethers.getSigners();
-    chains = await testnet.chains();
-    ethereum = chains[0];
+    ethereum = testnet.ethereum;
     provider = ethers.getDefaultProvider(ethereum.endpoint);
     accounts = await ethereum.accounts();
-    for (i = 0; i < accounts.length; i++) {
-      if (accounts[i].type == "contract") {
-        if (accounts[i].name == "SecondThief") {
-          // Assign the secondThiefContract here!
-        } else if ((accounts[i].name = "ProtectedBank")) {
-          bankInfo = {
-            address: accounts[i].address,
-            abi: accounts[i].abi,
-          };
-        }
-      }
-    }
+    const thief = contracts["SecondThief"];
+    const bank = contracts["ProtectedBank"];
+    // Assign the secondThiefContract here!
+    bankInfo = {
+      address: bank.address,
+      abi: bank.abi,
+    };
     // Add a second timeout argument of `360000` here!
   });
 

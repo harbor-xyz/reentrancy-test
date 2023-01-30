@@ -12,8 +12,6 @@ describe(
   () => {
     let harbor;
     let testnet;
-    let chains;
-    let accounts;
     let ethereum;
     let provider;
     let bankContract;

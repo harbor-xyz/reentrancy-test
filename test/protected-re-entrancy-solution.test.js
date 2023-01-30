@@ -17,8 +17,6 @@ function generateRandomTestnetName() {
 describe("Re-entrancy test", () => {
   let harbor;
   let testnet;
-  let chains;
-  let accounts;
   let ethereum;
   let provider;
   let protectedBankContract;
@@ -57,26 +55,20 @@ describe("Re-entrancy test", () => {
       testnetName
     );
     signers = await hre.ethers.getSigners();
-    chains = await testnet.chains();
-    ethereum = chains[0];
-    provider = ethers.getDefaultProvider(ethereum.endpoint);
-    accounts = await ethereum.accounts();
-    for (i = 0; i < accounts.length; i++) {
-      if (accounts[i].type == "contract") {
-        if (accounts[i].name == "SecondThief") {
-          secondThiefContract = new ethers.Contract(
-            accounts[i].address,
-            accounts[i].abi,
-            provider.getSigner(0)
-          );
-        } else if ((accounts[i].name = "ProtectedBank")) {
-          bankInfo = {
-            address: accounts[i].address,
-            abi: accounts[i].abi,
-          };
-        }
-      }
-    }
+    ethereum = testnet.ethereum;
+    const thief = contracts["SecondThief"];
+    const bank = contracts["ProtectedBank"];
+
+    secondThiefContract = new ethers.Contract(
+      thief.address,
+      thief.abi,
+      provider.getSigner(0)
+    );
+
+    bankInfo = {
+      address: bank.address,
+      abi: bank.abi,
+    };
   }, 360000);
   it("Expects testnet to be RUNNING", async () => {
     expect(testnet.status).to.eql("RUNNING");
@@ -96,17 +88,12 @@ describe("Re-entrancy test", () => {
     expect(balanceFormatted).to.eql(30);
 
     // Using the SDK to check ProtectedBank balance
-    const chains = await testnet.chains();
-    const accounts = await chains[0].accounts();
-    for (let i = 0; i < accounts.length; i++) {
-      if (accounts[i].type == "contract") {
-        if (accounts[i].name == "ProtectedBank") {
-          const balance = accounts[i].balances[0].amount;
-          const balanceFormatted = Number(balance) / 1e18;
-          expect(balanceFormatted).to.eql(30);
-        }
-      }
-    }
+    const ethereum = testnet.ethereum;
+    const contracts = await ethereum.contracts();
+    const protectedBank = contracts["ProtectedBank"];
+    const balanceSDK = protectedBank.balances["ETH"];
+    const balanceFormattedSDK = Number(balanceSDK) / 1e18;
+    expect(balanceFormattedSDK).to.eql(30);
   }, 50000);
   it("Attempting to attack the ProtectedBank will reject!", async () => {
     const oneEther = ethers.utils.parseEther("1");
@@ -120,16 +107,11 @@ describe("Re-entrancy test", () => {
     expect(balanceFormatted).to.eql(30);
 
     // Using the SDK to check ProtectedBank balance
-    const chains = await testnet.chains();
-    const accounts = await chains[0].accounts();
-    for (let i = 0; i < accounts.length; i++) {
-      if (accounts[i].type == "contract") {
-        if (accounts[i].name == "ProtectedBank") {
-          const balance = accounts[i].balances[0].amount;
-          const balanceFormatted = Number(balance) / 1e18;
-          expect(balanceFormatted).to.eql(30);
-        }
-      }
-    }
+    const { ethereum } = testnet;
+    const contracts = await ethereum.contracts();
+    const protectedBank = contracts["ProtectedBank"];
+    const balanceSDK = protectedBank.balances["ETH"];
+    const balanceFormattedSDK = Number(balanceSDK) / 1e18;
+    expect(balanceFormattedSDK).to.eql(30);
   }, 50000);
 });
