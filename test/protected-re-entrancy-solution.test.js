@@ -1,4 +1,4 @@
-const Harbor = require("@beam-me-up/harbor");
+const Harbor = require("@harbor-xyz/harbor");
 const hre = require("hardhat");
 const { ethers } = require("ethers");
 const chai = require("chai");
@@ -26,11 +26,11 @@ describe("Re-entrancy test", () => {
 
   const testnetName = generateRandomTestnetName();
 
-  // Fill in your credentials here!
+  // fill in the credentials below!
   beforeAll(async () => {
     harbor = new Harbor({
-      userKey: "rJyCfz3LRTaAsfgdPuWRJb",
-      projectKey: "7rpkaVgFdpUEtzkwtv1svu",
+      userKey: "",
+      projectKey: "",
     });
 
     await harbor.authenticate();
@@ -56,6 +56,7 @@ describe("Re-entrancy test", () => {
     );
     signers = await hre.ethers.getSigners();
     ethereum = testnet.ethereum;
+    provider = ethers.getDefaultProvider(ethereum.endpoint);
     const contracts = await ethereum.contracts();
     const thief = contracts["SecondThief"];
     const bank = contracts["ProtectedBank"];
@@ -91,7 +92,7 @@ describe("Re-entrancy test", () => {
     // Using the SDK to check ProtectedBank balance
     const ethereum = testnet.ethereum;
     const contracts = await ethereum.contracts();
-    const protectedBank = contracts["Bank"];
+    const protectedBank = contracts["ProtectedBank"];
     const balances = await protectedBank.balances();
     const ethBalance = balances["ETH"];
     const balanceFormattedSDK = Number(ethBalance) / 1e18;
@@ -111,7 +112,7 @@ describe("Re-entrancy test", () => {
     // Using the SDK to check ProtectedBank balance
     const { ethereum } = testnet;
     const contracts = await ethereum.contracts();
-    const protectedBank = contracts["Bank"];
+    const protectedBank = contracts["ProtectedBank"];
     const balances = await protectedBank.balances();
     const ethBalance = balances["ETH"];
     const balanceFormattedSDK = Number(ethBalance) / 1e18;

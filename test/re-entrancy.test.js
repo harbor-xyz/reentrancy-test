@@ -1,4 +1,4 @@
-const Harbor = require("@beam-me-up/harbor");
+const Harbor = require("@harbor-xyz/harbor");
 const hre = require("hardhat");
 const { expect } = require("chai");
 const { ethers } = require("ethers");
@@ -23,8 +23,8 @@ describe(
 
     beforeAll(async () => {
       harbor = new Harbor({
-        userKey: "rJyCfz3LRTaAsfgdPuWRJb",
-        projectKey: "7rpkaVgFdpUEtzkwtv1svu",
+        userKey: "",
+        projectKey: "",
       });
 
       await harbor.authenticate();
@@ -90,8 +90,8 @@ describe(
         // Using the SDK to check Bank balance!
         const { ethereum } = testnet;
         const contracts = await ethereum.contracts();
-        const protectedBank = contracts["Bank"];
-        const balances = await protectedBank.balances();
+        const bank = contracts["Bank"];
+        const balances = await bank.balances();
         const ethBalance = balances["ETH"];
         const balanceFormattedSDK = Number(ethBalance) / 1e18;
         expect(balanceFormattedSDK).to.eql(30);
@@ -113,8 +113,8 @@ describe(
         // Using the SDK to check Bank balance!
         const { ethereum } = testnet;
         const contracts = await ethereum.contracts();
-        const protectedBank = contracts["Bank"];
-        const balances = await protectedBank.balances();
+        const bank = contracts["Bank"];
+        const balances = await bank.balances();
         const ethBalance = balances["ETH"];
         const balanceFormattedSDK = Number(ethBalance) / 1e18;
         expect(balanceFormattedSDK).to.eql(0);

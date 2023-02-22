@@ -26,8 +26,8 @@ describe("Re-entrancy test", () => {
   beforeAll(async () => {
     // Initialize the `harbor` object here!
     harbor = new Harbor({
-      userKey: "rJyCfz3LRTaAsfgdPuWRJb",
-      projectKey: "7rpkaVgFdpUEtzkwtv1svu",
+      userKey: "",
+      projectKey: "",
     });
 
     // Authenticate here!
