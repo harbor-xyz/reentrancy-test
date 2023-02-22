@@ -23,8 +23,8 @@ describe(
 
     beforeAll(async () => {
       harbor = new Harbor({
-        userKey: "",
-        projectKey: "",
+        userKey: "rJyCfz3LRTaAsfgdPuWRJb",
+        projectKey: "7rpkaVgFdpUEtzkwtv1svu",
       });
 
       await harbor.authenticate();
@@ -50,7 +50,7 @@ describe(
       );
       signers = await hre.ethers.getSigners();
       ethereum = testnet.ethereum;
-      contracts = await ethereum.accounts();
+      contracts = await ethereum.contracts();
       const thief = contracts["Thief"];
       const bank = contracts["Bank"];
       provider = ethers.getDefaultProvider(ethereum.endpoint);
@@ -91,8 +91,9 @@ describe(
         const { ethereum } = testnet;
         const contracts = await ethereum.contracts();
         const protectedBank = contracts["Bank"];
-        const balanceSDK = protectedBank.balances["ETH"];
-        const balanceFormattedSDK = Number(balanceSDK) / 1e18;
+        const balances = await protectedBank.balances();
+        const ethBalance = balances["ETH"];
+        const balanceFormattedSDK = Number(ethBalance) / 1e18;
         expect(balanceFormattedSDK).to.eql(30);
       },
       TIMEOUT
@@ -113,8 +114,9 @@ describe(
         const { ethereum } = testnet;
         const contracts = await ethereum.contracts();
         const protectedBank = contracts["Bank"];
-        const balanceSDK = protectedBank.balances["ETH"];
-        const balanceFormattedSDK = Number(balanceSDK) / 1e18;
+        const balances = await protectedBank.balances();
+        const ethBalance = balances["ETH"];
+        const balanceFormattedSDK = Number(ethBalance) / 1e18;
         expect(balanceFormattedSDK).to.eql(0);
       },
       TIMEOUT

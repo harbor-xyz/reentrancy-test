@@ -298,19 +298,19 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@beam-me-up/harbor-cli@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@beam-me-up/harbor-cli/-/harbor-cli-0.0.11.tgz#db12fdea8777bd06e98db2cceae8e176e7b3ebd0"
-  integrity sha512-Ysd1vODpDUzFFbrggOEYFoIqrddhtOxfnPZRUIJwns7QobQQ9xDIL6JcS97wh50UCDS+91J4F5Fqykclrtgvtg==
+"@beam-me-up/harbor-cli@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@beam-me-up/harbor-cli/-/harbor-cli-0.0.17.tgz#20bc47caabf652aa7a11bd82301a890bb8019d30"
+  integrity sha512-uvrN7kDzfvhbb8qao8ta2WukB50TmGoux3Enw3d8l5ZiWL/idwJeLOxT3Q55OXbJKYdm6xa5YLLVPBbnvf6WxA==
   dependencies:
     mkdirp "^1.0.4"
 
-"@beam-me-up/harbor@0.0.17":
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/@beam-me-up/harbor/-/harbor-0.0.17.tgz#f0e38d3ca03f97ac88a378dd04a949932ee91737"
-  integrity sha512-cgHf279886DWUySsRpvo3thE660PkzSYW03TEP5v9sIYQwd/Wmp4QLlsBajizUUbC6yjxuZMv2Vac7lDTrmMyQ==
+"@beam-me-up/harbor@0.0.26":
+  version "0.0.26"
+  resolved "https://registry.yarnpkg.com/@beam-me-up/harbor/-/harbor-0.0.26.tgz#ee9abd423271d748ecd82c6121fd5c9147bb28bb"
+  integrity sha512-vGKiTsHRmDjtDj7GiED1KouWhF117STCfCYieFzKK1FfcDC2lOe2IMEjsFUysuTLQef4MgF9XcouRGtc3xW46A==
   dependencies:
-    "@beam-me-up/harbor-cli" "^0.0.11"
+    "@beam-me-up/harbor-cli" "^0.0.17"
     isomorphic-unfetch "^3.1.0"
     project-bin-path "^2.0.0"
 

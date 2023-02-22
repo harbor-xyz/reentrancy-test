@@ -1,4 +1,4 @@
-const Harbor = require("@harbor-xyz/harbor");
+const Harbor = require("@beam-me-up/harbor");
 const hre = require("hardhat");
 const { ethers } = require("ethers");
 const chai = require("chai");
@@ -29,8 +29,8 @@ describe("Re-entrancy test", () => {
   // Fill in your credentials here!
   beforeAll(async () => {
     harbor = new Harbor({
-      userKey: "",
-      projectKey: "",
+      userKey: "rJyCfz3LRTaAsfgdPuWRJb",
+      projectKey: "7rpkaVgFdpUEtzkwtv1svu",
     });
 
     await harbor.authenticate();
@@ -56,6 +56,7 @@ describe("Re-entrancy test", () => {
     );
     signers = await hre.ethers.getSigners();
     ethereum = testnet.ethereum;
+    const contracts = await ethereum.contracts();
     const thief = contracts["SecondThief"];
     const bank = contracts["ProtectedBank"];
 
@@ -90,9 +91,10 @@ describe("Re-entrancy test", () => {
     // Using the SDK to check ProtectedBank balance
     const ethereum = testnet.ethereum;
     const contracts = await ethereum.contracts();
-    const protectedBank = contracts["ProtectedBank"];
-    const balanceSDK = protectedBank.balances["ETH"];
-    const balanceFormattedSDK = Number(balanceSDK) / 1e18;
+    const protectedBank = contracts["Bank"];
+    const balances = await protectedBank.balances();
+    const ethBalance = balances["ETH"];
+    const balanceFormattedSDK = Number(ethBalance) / 1e18;
     expect(balanceFormattedSDK).to.eql(30);
   }, 50000);
   it("Attempting to attack the ProtectedBank will reject!", async () => {
@@ -109,9 +111,10 @@ describe("Re-entrancy test", () => {
     // Using the SDK to check ProtectedBank balance
     const { ethereum } = testnet;
     const contracts = await ethereum.contracts();
-    const protectedBank = contracts["ProtectedBank"];
-    const balanceSDK = protectedBank.balances["ETH"];
-    const balanceFormattedSDK = Number(balanceSDK) / 1e18;
+    const protectedBank = contracts["Bank"];
+    const balances = await protectedBank.balances();
+    const ethBalance = balances["ETH"];
+    const balanceFormattedSDK = Number(ethBalance) / 1e18;
     expect(balanceFormattedSDK).to.eql(30);
   }, 50000);
 });

@@ -1,13 +1,33 @@
-// imports
-const { ethers } = require("hardhat");
+import { HardhatRuntimeEnvironment } from "hardhat/types";
+import { DeployFunction } from "hardhat-deploy/types";
 
-// async main
-async function main() {
-  const SimpleStorageFactory = await ethers.getContractFactory("Bank");
-  console.log("Deploying contract...");
-  const simpleStorage = await SimpleStorageFactory.deploy();
-  await simpleStorage.deployed();
-  console.log(`Bank contract deployed to: ${simpleStorage.address}`);
-}
+const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+  const deployments = hre.deployments;
+  const { deploy } = deployments;
+  const { deployer } = await hre.getNamedAccounts();
 
-module.exports.default = main;
+  const bank = await deploy("Bank", {
+    from: deployer,
+    gasLimit: 500000,
+  });
+
+  const bankAddress = bank.address;
+  await deploy("Thief", {
+    from: deployer,
+    gasLimit: 500000,
+    args: [bankAddress],
+  });
+
+  const protectedBank = await deploy("ProtectedBank", {
+    from: deployer,
+    gasLimit: 500000,
+  });
+  const protectedBankAddress = protectedBank.address;
+
+  await deploy("SecondThief", {
+    from: deployer,
+    gasLimit: 500000,
+    args: [protectedBankAddress],
+  });
+};
+export default func;

@@ -1,4 +1,4 @@
-const Harbor = require("@harbor-xyz/harbor");
+const Harbor = require("@beam-me-up/harbor");
 const hre = require("hardhat");
 const { ethers } = require("ethers");
 const chai = require("chai");
@@ -26,8 +26,8 @@ describe("Re-entrancy test", () => {
   beforeAll(async () => {
     // Initialize the `harbor` object here!
     harbor = new Harbor({
-      userKey: "",
-      projectKey: "",
+      userKey: "rJyCfz3LRTaAsfgdPuWRJb",
+      projectKey: "7rpkaVgFdpUEtzkwtv1svu",
     });
 
     // Authenticate here!

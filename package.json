@@ -11,7 +11,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@beam-me-up/harbor": "0.0.17",
+    "@beam-me-up/harbor": "0.0.26",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.5",
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
     "@nomiclabs/hardhat-ethers": "^2.1.0",
